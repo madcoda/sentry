@@ -324,12 +324,17 @@ class User extends Model implements UserInterface {
 	 */
 	public function getPersistCode()
 	{
-		$this->persist_code = $this->getRandomString();
-
-		// Our code got hashed
 		$persistCode = $this->persist_code;
 
-		$this->save();
+		if (is_null($persistCode))
+		{
+			$this->persist_code = $this->getRandomString();
+
+			// Our code got hashed
+			$persistCode = $this->persist_code;
+
+			$this->save();
+		}
 
 		return $persistCode;
 	}
